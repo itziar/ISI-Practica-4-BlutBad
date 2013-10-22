@@ -162,6 +162,14 @@ var PlayerShip = function() {
 	    this.reload = this.reloadTime;
     }
 
+    if(Game.keys['fireb_left']){
+        Game.keys['fireb_left']= false;
+        console.log("fireball");
+        this.board.add(new FireBall(this.x+this.w,this.y+this.h/2));
+	    this.reload = this.reloadTime;
+    }
+
+
     }
 
     this.draw = function(ctx) {
@@ -206,7 +214,7 @@ var FireBall = function(x,y){
         }
 
      this.draw = function(ctx){
-            SpriteSheet.draw(ctx,'explosion',this.x,this.y,10,10,5);
+            SpriteSheet.draw(ctx,'explosion',this.x,this.y,0,20,20);
          }   
     };
 
