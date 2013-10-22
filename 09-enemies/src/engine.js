@@ -32,12 +32,13 @@ var Game = new function() {
     };
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire',78:fireb_right, 66:fireb_left};
+    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 78:'fireb_right', 66:'fireb_left'};
     this.keys = {};
 
     // Los codigos para las teclas n=78, para b=66
     this.setupInput = function() {
 	$(window).keydown(function(event){
+    console.log(event);
 	    if (KEY_CODES[event.which]) {
 		Game.keys[KEY_CODES[event.which]] = true;
 		return false;
@@ -45,6 +46,7 @@ var Game = new function() {
 	});
 	
 	$(window).keyup(function(event){
+    console.log(Game.keys);
 	    if (KEY_CODES[event.which]) {
 		Game.keys[KEY_CODES[event.which]] = false;
 		return false;
@@ -118,6 +120,22 @@ var SpriteSheet = new function() {
                       s.w, s.h, 
                       Math.floor(x), Math.floor(y),
                       s.w, s.h);
+    };
+
+    this.draw = function(ctx,sprite,x,y,dw,dh,frame) {
+	var s = this.map[sprite];
+	if(!frame) frame = 0;
+
+	ctx.drawImage(this.image,
+                      s.sx + frame * s.w, 
+                      s.sy, 
+                      s.w, s.h, 
+                      Math.floor(x), Math.floor(y),
+                      dw, dh);
+
+
+    //            	  sx sy sWidth sHeight dx   dy   dWidth dHeight
+    //ctx.drawImage(img,0, 0, 37,    42,     200, 400, 37,    42);
     };
 }
 
