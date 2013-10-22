@@ -157,14 +157,12 @@ var PlayerShip = function() {
     
     if(Game.keys['fireb_right']){
         Game.keys['fireb_rigth']= false;
-        console.log("fireball");
         this.board.add(new FireBall(this.x,this.y+this.h/2));
 	    this.reload = this.reloadTime;
     }
 
     if(Game.keys['fireb_left']){
         Game.keys['fireb_left']= false;
-        console.log("fireball");
         this.board.add(new FireBall(this.x+this.w,this.y+this.h/2));
 	    this.reload = this.reloadTime;
     }
@@ -202,8 +200,10 @@ PlayerMissile.prototype.draw = function(ctx)  {
 var FireBall = function(x,y){
     this.w = SpriteSheet.map['explosion'].w; //coger el frame 5
     this.h = SpriteSheet.map['explosion'].h;
-    this.x = x - this.w/2; 
-    this.y = y - this.h; 
+
+    //Tener en cuenta el escalado para h y w
+    this.x = x - this.w/10 ; 
+    this.y = y - this.h/10; 
     
     this.vy = -700;
 
