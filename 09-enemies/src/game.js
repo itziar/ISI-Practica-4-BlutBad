@@ -183,14 +183,22 @@ PlayerMissile.prototype.draw = function(ctx)  {
 };
 
 var FireBall = function(){
-    this.w = SpriteSheet.map['missile'].w;
-    this.h = SpriteSheet.map['missile'].h;
+    this.w = SpriteSheet.map['explotion'].w; //coger el frame 5
+    this.h = SpriteSheet.map['explotion'].h;
     this.x = x - this.w/2; 
-
     this.y = y - this.h; 
+    
     this.vy = -700;
-    
-    
+
+    this.step = function(dt){
+        this.y += this.vy * dt;
+        if(this.y < -this.h){this.board.remove(this)}
+        
+        }
+
+     this.draw = function(ctx){
+            SpriteSheet.draw(ctx,'explotion',this.x,this.y,5);
+         }   
     }
 
 
