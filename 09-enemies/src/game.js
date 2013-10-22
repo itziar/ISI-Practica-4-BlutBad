@@ -5,6 +5,7 @@ var sprites = {
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 }
+    explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 } 
 };
 
 
@@ -37,7 +38,6 @@ var playGame = function() {
     // segundo argumento de la llamada al constructor. Ver comentarios en el
     // constructor Enemy al final de este fichero.
     board.add(new Enemy(enemies.basic, { x: 200 }));
-    board.add(new Enemy(enemies.basic, { x: 50 }));
 
     board.add(new PlayerShip());
     Game.setBoard(3,board);
@@ -182,6 +182,16 @@ PlayerMissile.prototype.draw = function(ctx)  {
     SpriteSheet.draw(ctx,'missile',this.x,this.y);
 };
 
+var FireBall = function(){
+    this.w = SpriteSheet.map['missile'].w;
+    this.h = SpriteSheet.map['missile'].h;
+    this.x = x - this.w/2; 
+
+    this.y = y - this.h; 
+    this.vy = -700;
+    
+    
+    }
 
 
 // Constructor para las naves enemigas. Un enemigo se define mediante
