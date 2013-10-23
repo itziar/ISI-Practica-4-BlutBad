@@ -84,16 +84,23 @@ describe("Enemies", function() {
         e = new Enemy(enemies.basic);
 
         var board = {
-            remove =  function(obj){}
+            remove:  function(obj){}
             };
+        //this.board es indefinido si no hago eso. 
         e.board = board;
 
-        spyOn(e.board,'remove');
-        e.step(20);
-        expect(e.board.remove).not.toHaveBeenCalled();
-        e.step(1120000);
-        expect(e.board.remove).toHaveBeenCalled();
+        spyOn(board,'remove');
+        e.step(0.02); // En el tablero
+        expect(board.remove).not.toHaveBeenCalled();
+        e.step(200); //fuera del tablero
+        expect(board.remove).toHaveBeenCalled();
 });
     it("enemy draw", function(){
+
+        });
+
+    it("enemy position",function(){
+        //Añadir un test que comprueba  la posicion de la nave enemiga al inicio 
+        //y despues de un ciero dt
         });
 });
