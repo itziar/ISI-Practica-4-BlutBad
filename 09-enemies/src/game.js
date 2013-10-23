@@ -212,13 +212,7 @@ var FireBall = function(x,y,factor){
     this.vx = 30 * factor;
     
     this.desplazX = -20;
-
     this.desplazY = 30;
-    //Factor de la apertura de la parabola
-    this.A = 28;
-    //Para sumar/restar la posicion de la bola a su pos inicial.
-    //Derecha -1 // Izquierda +1
-    this.factor = factor;
 
 
     this.step = function(dt){
