@@ -204,10 +204,16 @@ var FireBall = function(x,y,factor){
     //Tener en cuenta el escalado para h y w
     this.x = x - this.w/20 ; 
     this.y = y - this.h/10; 
+    
     this.startX = x; 
-    this.startY = 0;
+    this.startY = 10;
+    
     this.vy = -700;
+    this.vx = 30 * factor;
+    
+    this.desplazX = -20;
 
+    this.desplazY = 30;
     //Factor de la apertura de la parabola
     this.A = 28;
     //Para sumar/restar la posicion de la bola a su pos inicial.
@@ -216,9 +222,10 @@ var FireBall = function(x,y,factor){
 
 
     this.step = function(dt){
-        this.y += this.vy * dt;
-        this.startY += -1*this.vy * dt;
-        this.x = (this.factor)*Math.sqrt(this.A*this.startY)+this.startX;
+        this.x +=  dt*this.vx;
+        this.desplazX += dt * Math.abs(this.vx);
+        this.x += dt* this.vx;
+        this.y  = this.desplazY + Math.pow(this.desplazX,2);
         if(this.y < -this.h){this.board.remove(this)}
         
         }

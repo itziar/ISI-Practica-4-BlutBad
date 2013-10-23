@@ -38,7 +38,6 @@ var Game = new function() {
     // Los codigos para las teclas n=78, para b=66
     this.setupInput = function() {
 	$(window).keydown(function(event){
-    //console.log(event);
 	    if (KEY_CODES[event.which]) {
 		Game.keys[KEY_CODES[event.which]] = true;
 		return false;
@@ -46,7 +45,6 @@ var Game = new function() {
 	});
 	
 	$(window).keyup(function(event){
-    //console.log(Game.keys);
 	    if (KEY_CODES[event.which]) {
 		Game.keys[KEY_CODES[event.which]] = false;
 		return false;
