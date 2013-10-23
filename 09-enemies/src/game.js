@@ -156,14 +156,14 @@ var PlayerShip = function() {
     //console.log("1");if(Game.keys['fireb_rigth'] 
     
     if(Game.keys['fireb_right']){
-        Game.keys['fireb_rigth']= false;
-        this.board.add(new FireBall(this.x,this.y+this.h/2));
+        //Game.keys['fireb_right']= false;
+        this.board.add(new FireBall(this.x,this.y+this.h/2,-1));
 	    this.reload = this.reloadTime;
     }
 
     if(Game.keys['fireb_left']){
-        Game.keys['fireb_left']= false;
-        this.board.add(new FireBall(this.x+this.w,this.y+this.h/2));
+        //Game.keys['fireb_left']= false;
+        this.board.add(new FireBall(this.x+this.w,this.y+this.h/2,1));
 	    this.reload = this.reloadTime;
     }
 
@@ -197,24 +197,34 @@ PlayerMissile.prototype.draw = function(ctx)  {
     SpriteSheet.draw(ctx,'missile',this.x,this.y);
 };
 
-var FireBall = function(x,y){
-    this.w = SpriteSheet.map['explosion'].w; //coger el frame 5
+var FireBall = function(x,y,factor){
+    this.w = SpriteSheet.map['explosion'].w; //coger el frame 1
     this.h = SpriteSheet.map['explosion'].h;
 
     //Tener en cuenta el escalado para h y w
-    this.x = x - this.w/10 ; 
+    this.x = x - this.w/20 ; 
     this.y = y - this.h/10; 
-    
+    this.startX = x; 
+    this.startY = 0;
     this.vy = -700;
+
+    //Factor de la apertura de la parabola
+    this.A = 28;
+    //Para sumar/restar la posicion de la bola a su pos inicial.
+    //Derecha -1 // Izquierda +1
+    this.factor = factor;
+
 
     this.step = function(dt){
         this.y += this.vy * dt;
+        this.startY += -1*this.vy * dt;
+        this.x = (this.factor)*Math.sqrt(this.A*this.startY)+this.startX;
         if(this.y < -this.h){this.board.remove(this)}
         
         }
 
      this.draw = function(ctx){
-            SpriteSheet.draw(ctx,'explosion',this.x,this.y,0,20,20);
+            SpriteSheet.draw(ctx,'explosion',this.x,this.y,1,20,20);
          }   
     };
 
