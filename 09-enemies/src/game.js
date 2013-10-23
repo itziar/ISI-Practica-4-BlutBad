@@ -155,13 +155,13 @@ var PlayerShip = function() {
 	}
     //console.log("1");if(Game.keys['fireb_rigth'] 
     
-    if(Game.keys['fireb_right']){
+    if(Game.keys['fireb_right'] && this.reload < 0 ){
         //Game.keys['fireb_right']= false;
         this.board.add(new FireBall(this.x,this.y+this.h/2,-1));
 	    this.reload = this.reloadTime;
     }
 
-    if(Game.keys['fireb_left']){
+    if(Game.keys['fireb_left'] && this.reload < 0 ){
         //Game.keys['fireb_left']= false;
         this.board.add(new FireBall(this.x+this.w,this.y+this.h/2,1));
 	    this.reload = this.reloadTime;
