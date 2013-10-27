@@ -78,3 +78,10 @@
   jugador, desaparece.
 
 */
+describe("11 - Clase Starfield", function() {
+
+it("empty test", function(){
+  
+});
+
+});
