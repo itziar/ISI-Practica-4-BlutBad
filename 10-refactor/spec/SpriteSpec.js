@@ -39,4 +39,27 @@ describe("10 - SpriteSpec", function() {
         expect(sp.var1).toBe(1);
         expect(sp.var2).toBe(2);
     });
+
+     it("merge", function() {
+
+        var spro = function() {
+            this.setup("ship", {
+                var1: 1,
+                var2: 2
+            });
+        }
+        spro.prototype = new Sprite()
+        sp = new spro()
+        expect(sp.var1).toBeDefined();
+        expect(sp.var2).toBeDefined();
+        expect(sp.var1).toBe(1);
+        expect(sp.var2).toBe(2);
+
+        sp.merge({
+        	var1 : 5,
+        	var2 : 6
+        });
+    	expect(sp.var1).toBe(5);
+        expect(sp.var2).toBe(6);
+    });
 });
