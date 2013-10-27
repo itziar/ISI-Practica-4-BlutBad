@@ -61,9 +61,10 @@
 
 */
 
-describe("Enemies", function() {
+describe("09 - Enemies", function() {
     var canvas, ctx;
     beforeEach(function() {
+        SpriteSheet.map = sprites
 
         loadFixtures('index.html');
 
@@ -73,40 +74,15 @@ describe("Enemies", function() {
         ctx = canvas.getContext('2d');
         expect(ctx).toBeDefined();
 
-        var sprites = {
-            enemy_purple: {
-                sx: 37,
-                sy: 0,
-                w: 42,
-                h: 43,
-                frames: 1
-            },
-        };
-        var enemies = {
-            basic: {
-                x: 100,
-                y: -50,
-                sprite: 'enemy_purple',
-                B: 100,
-                C: 2,
-                E: 100
-            }
-        };
-        SpriteSheet.map = sprites;
-
-        e = new Enemy(enemies.basic);
-
-
 
     });
 
     it("enemy step", function() {
 
-        var board = {
-            remove: function(obj) {}
-        };
+        var board = new GameBoard();
         //this.board es indefinido si no hago eso. 
         // e es el enemygo genergico que se crea par cada test
+        e = new Enemy(enemies.basic);
         e.board = board;
 
         spyOn(board, 'remove');
@@ -119,7 +95,7 @@ describe("Enemies", function() {
 
         //this.board es indefinido si no hago eso. 
         // e es el enemygo genergico que se crea par cada test
-        e.board = board;
+        e = new Enemy(enemies.basic);
         spyOn(e, 'draw');
         e.draw(ctx);
         expect(e.draw).toHaveBeenCalled();
