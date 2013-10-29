@@ -27,17 +27,19 @@
     la clase en el prototipo
 
 */
-hola
 
-describe("Clase PlayerMissile", function() {
+
+describe("09 - Clase PlayerMissile", function() {
 
 
     it("defined missile in spriteSheet", function() {
-        SpriteSheet.map['missile'] = sprites.missile;
-        expect(SpriteSheet.map['missile']).toBeDefined();
+        // SpriteSheet.map['missile'] = sprites.missile;
+        // expect(SpriteSheet.map['missile']).toBeDefined();
     });
-    Gam
+
     it("add 2 missile to spriteSheet", function() {
+        SpriteSheet.map = sprites
+
         board = new GameBoard();
         pShip = new PlayerShip();
         pShip.reload = -1;
@@ -57,7 +59,8 @@ describe("Clase PlayerMissile", function() {
 
 
     it("draw missile", function() {
-        SpriteSheet.map['missile'] = sprites.missile;
+        SpriteSheet.map = sprites
+        //SpriteSheet.map['missile'] = sprites.missile;
         board = new GameBoard();
         //pShip = new PlayerShip();
         ctx = {};

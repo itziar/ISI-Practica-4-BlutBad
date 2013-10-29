@@ -76,7 +76,31 @@
 
   La nave enemiga, tras informar llamando a hit() de la nave del
   jugador, desaparece.
+  
+  **********************************************************
+- que un misil con el daño suficiente que colisiona con una nave
+     enemiga la destruye, eliminándose la nave y el misil del tablero
+     de juegos
 
+   - que un misil con daño insuficiente que colisiona con una nave
+     enemiga no la destruye, reduce la salud de la nave enemiga, y
+     desaparece del tablero de juegos sin que desaparezca la nave
+     enemiga
+
+   - que una bola de fuego que colisiona con una nave la destruye
+     siempre, desapareciendo del tablero de juegos la nave enemiga, y
+     no desapareciendo la bola de fuego
+
+   - que una nave enemiga que colisiona con la nave del jugador la
+     destruye, eliminándose tanto la nave enemiga como la nave del
+     jugador tras aparecer la explosión en la pantalla
+
+   En estas pruebas de integración queremos comprobar que el código
+   real de GameBoard, PlayerShip, PlayerMissile, Enemy y FireBall
+   interacciona correctamente, por lo que no deberás crear objetos
+   dummy para ellos. Sin embargo, no queremos probar el código del
+   resto de objetos (Game, SpriteSheet,...), por lo que estos últimos
+   sí deben ser substituidos por dobles.
 */
 describe("11 - Clase Starfield", function() {
 
