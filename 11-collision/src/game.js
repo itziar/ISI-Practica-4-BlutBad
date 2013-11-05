@@ -350,8 +350,13 @@ Enemy.prototype.step = function(dt) {
 
     var collision = this.board.collide(this, OBJECT_PLAYER);
     if (collision) {
+        //Se añade la explosion
+        this.board.add(new Explosion(this.x + this.w / 2,
+            this.y + this.h / 2));
+
         collision.hit(this.damage);
         this.board.remove(this);
+
     }
 
     if (this.y > Game.height ||
