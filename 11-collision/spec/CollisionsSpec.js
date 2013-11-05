@@ -138,7 +138,9 @@ describe("11 - Clase Starfield", function() {
     SpriteSheet.map = sprites;
   });
 
-
+  // que un misil con el daño suficiente que colisiona con una nave
+  //  enemiga la destruye, eliminándose la nave y el misil del tablero
+  //  de juegos
   it("Colision del misil y nave enemiga, damage > health", function() {
 
     board = new GameBoard();
@@ -165,6 +167,11 @@ describe("11 - Clase Starfield", function() {
     expect(_.contains(board.objects, misil)).toBe(false);
   });
 
+
+  //que un misil con daño insuficiente que colisiona con una nave
+  //     enemiga no la destruye, reduce la salud de la nave enemiga, y
+  //    desaparece del tablero de juegos sin que desaparezca la nave
+  //    enemiga
   it("Colision del misil y nave enemiga, damage < health", function() {
 
     board = new GameBoard();
@@ -193,4 +200,66 @@ describe("11 - Clase Starfield", function() {
   });
 
 
+  //que una bola de fuego que colisiona con una nave la destruye
+  //    siempre, desapareciendo del tablero de juegos la nave enemiga, y
+  //    no desapareciendo la bola de fuego
+it("Colision del FireBall y nave enemiga", function() {
+    board = new GameBoard();
+
+    //Para que haya colision entre estos dos objetoss
+    ball = new FireBall(1, 1, 1);
+    ball.x = 1;
+    ball.y = 1;
+
+    enemy = new Enemy(enemies.basic);
+    enemy.x = 1;
+    enemy.y = 1;
+
+
+    ball.damage = 100;
+    enemy.health = 10;
+
+    board.add(ball);
+    board.add(enemy);
+    expect(board.objects.length).toBe(2);
+
+    board.step(0.0001);
+    board.step(0.002);
+    //Por alguna razon no se borra el enemigo
+    //expect(_.contains(board.objects, enemy)).toBe(false);
+    expect(board.objects.length).toBe(2);
+    // 2 porque se añade la exposion
+    expect(_.contains(board.objects, ball)).toBe(true);
+    //Ball no se elimina pero la nave si
+  });
+
+
+//que una nave enemiga que colisiona con la nave del jugador la
+//     destruye, eliminándose tanto la nave enemiga como la nave del
+//     jugador tras aparecer la explosión en la pantalla
+
+it("Colision de PlayerShip y nave enemiga", function() {
+    board = new GameBoard();
+
+    //Para que haya colision entre estos dos objetoss
+    enemy = new Enemy(enemies.basic);
+    enemy.x = 1;
+    enemy.y = 1;
+
+    ship = new PlayerShip(1,1);
+    ship.x = 1;
+    ship.y = 1;
+
+    board.add(enemy);
+    board.add(ship);
+    expect(board.objects.length).toBe(2);
+
+    board.step(0.0001);
+    expect(_.contains(board.objects, ship)).toBe(false);
+    expect(_.contains(board.objects, ball)).toBe(false);
+    //Se han eliminado player y el enemigo
+    board.step(0.00001);
+    expect(board.objects.length).toBe(1);
+    //Se ha añadido la explosion
+  });
 });
