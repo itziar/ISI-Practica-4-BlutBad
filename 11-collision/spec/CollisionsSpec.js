@@ -103,9 +103,67 @@
    sí deben ser substituidos por dobles.
 */
 describe("11 - Clase Starfield", function() {
+  beforeEach(function() {
+    var sprites = {
+      ship: {
+        sx: 0,
+        sy: 0,
+        w: 37,
+        h: 42,
+        frames: 1
+      },
+      missile: {
+        sx: 0,
+        sy: 30,
+        w: 2,
+        h: 10,
+        frames: 1
+      },
+      enemy_purple: {
+        sx: 37,
+        sy: 0,
+        w: 42,
+        h: 43,
+        frames: 1
+      },
+      explosion: {
+        sx: 0,
+        sy: 64,
+        w: 64,
+        h: 64,
+        frames: 12
+      }
+    };
 
-    it("empty test", function() {
+    SpriteSheet.map = sprites;
+  });
 
-    });
+
+  it("Colision del misil y nave enemiga", function() {
+
+    board = new GameBoard();
+
+    //Para que haya colision entre estos dos objetoss
+    misil = new PlayerMissile(1, 1);
+    misil.x = 1;
+    misil.y = 1;
+
+    enemy = new Enemy(enemies.basic);
+    enemy.x = 1;
+    enemy.y = 1;
+
+
+    misil.damage = 100;
+    enemy.health = 10;
+
+    board.add(misil);
+    board.add(enemy);
+    expect(board.objects.length).toBe(2);
+
+    board.step(0.0001);
+    expect(_.contains(board.objects, enemy)).toBe(false);
+    expect(_.contains(board.objects, misil)).toBe(false);
+  });
+
 
 });
