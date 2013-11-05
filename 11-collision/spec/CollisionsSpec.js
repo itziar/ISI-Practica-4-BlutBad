@@ -139,7 +139,7 @@ describe("11 - Clase Starfield", function() {
   });
 
 
-  it("Colision del misil y nave enemiga", function() {
+  it("Colision del misil y nave enemiga, damage > health", function() {
 
     board = new GameBoard();
 
@@ -163,6 +163,33 @@ describe("11 - Clase Starfield", function() {
     board.step(0.0001);
     expect(_.contains(board.objects, enemy)).toBe(false);
     expect(_.contains(board.objects, misil)).toBe(false);
+  });
+
+  it("Colision del misil y nave enemiga, damage < health", function() {
+
+    board = new GameBoard();
+
+    //Para que haya colision entre estos dos objetoss
+    misil = new PlayerMissile(1, 1);
+    misil.x = 1;
+    misil.y = 1;
+
+    enemy = new Enemy(enemies.basic);
+    enemy.x = 1;
+    enemy.y = 1;
+
+
+    misil.damage = 10;
+    enemy.health = 100;
+
+    board.add(misil);
+    board.add(enemy);
+    expect(board.objects.length).toBe(2);
+
+    board.step(0.0001);
+    expect(_.contains(board.objects, enemy)).toBe(true);
+    expect(_.contains(board.objects, misil)).toBe(false);
+    //Misil se elimina pero la nave no
   });
 
 
