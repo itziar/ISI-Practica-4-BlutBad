@@ -62,10 +62,10 @@
 */
 
 describe("09 - Enemies", function() {
-    var canvas, ctx;
-    beforeEach(function() {
-        SpriteSheet.map = sprites
 
+    var canvas, ctx;
+
+    beforeEach(function() { 
         loadFixtures('index.html');
 
         canvas = $('#game')[0];
@@ -74,36 +74,44 @@ describe("09 - Enemies", function() {
         ctx = canvas.getContext('2d');
         expect(ctx).toBeDefined();
 
+        SpriteSheet.map = sprites;
+        e = new Enemy(enemies.basic);
+        e.board = new GameBoard(); 
+        e.board.remove = function(obj) {};
+    }); 
 
+    it("Enemy position", function() {
+       x = 100;
+       y = -50;
+       dt = 2;
+
+       expect(e.x).toBe(x);
+       expect(e.y).toBe(y);
+       e.step(dt); 
+       
+       x += e.vx*dt;
+       y += e.vy*dt;
+       expect(e.x).toBe(x);
+       expect(e.y).toBe(y);
     });
 
-    it("enemy step", function() {
+    it("Method enemy step", function() {  
 
-        var board = new GameBoard();
-        //this.board es indefinido si no hago eso. 
-        // e es el enemygo genergico que se crea par cada test
-        e = new Enemy(enemies.basic);
-        e.board = board;
-
-        spyOn(board, 'remove');
+        spyOn(e.board, 'remove');
         e.step(0.02); // En el tablero
-        expect(board.remove).not.toHaveBeenCalled();
-        e.step(200); //fuera del tablero
-        expect(board.remove).toHaveBeenCalled();
+        expect(e.board.remove).not.toHaveBeenCalled();
+        e.step(200); // Fuera del tablero
+        expect(e.board.remove).toHaveBeenCalled();
     });
-    it("enemy draw", function() {
 
-        //this.board es indefinido si no hago eso. 
-        // e es el enemygo genergico que se crea par cada test
-        e = new Enemy(enemies.basic);
-        spyOn(e, 'draw');
+    it("Method enemy draw", function() {  
+        SpriteSheet = { 
+          draw: function(ctx, sprite, x, y) {}
+        };
+
+        spyOn(SpriteSheet, 'draw');
         e.draw(ctx);
-        expect(e.draw).toHaveBeenCalled();
-
+        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, e.sprite, e.x, e.y);
     });
 
-    it("enemy position", function() {
-        //Ańadir un test que comprueba  la posicion de la nave enemiga al inicio 
-        //y despues de un ciero dt
-    });
 });
