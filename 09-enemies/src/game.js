@@ -58,10 +58,30 @@ var enemies = {
     basic: {
         x: 100,
         y: -50,
-        sprite: 'enemy_purple',
+        sprite: 'enemy_bee',
         B: 100,
         C: 2,
         E: 100
+    },
+
+    basic2: {
+        x: 50,
+        y: -100,
+        sprite: 'enemy_circle',
+        B: 75,
+        C: 1,
+        E: 80,
+        F: 3, 
+    },
+
+    basic3: {
+        x: 25,
+        y: 0,
+        sprite: 'enemy_ship',
+        B: 100,
+        C: 1,
+        E: 200,
+        F: 3, 
     }
 
 };
@@ -82,12 +102,20 @@ var playGame = function() {
 
     // Se añade un enemigo con las propiedades definidas en enemies.basic
     board.add(new Enemy(enemies.basic));
+    board.add(new Enemy(enemies.basic2));
+    board.add(new Enemy(enemies.basic3));
     // Se añade un enemigo con las propiedades definidas en
     // enemies.basic, pero con la propiedad x = 200 definida en el
     // segundo argumento de la llamada al constructor. Ver comentarios en el
     // constructor Enemy al final de este fichero.
     board.add(new Enemy(enemies.basic, {
+        x: 150
+    }));
+    board.add(new Enemy(enemies.basic, {
         x: 200
+    }));
+    board.add(new Enemy(enemies.basic2, {
+        x: 100
     }));
 
     board.add(new PlayerShip());
