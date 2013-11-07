@@ -333,7 +333,9 @@ var FireBall = function(x, y, factor) {
     this.y = y - this.h / 10;
 };
 
+// Heredamos del prototipo new Sprite()
 FireBall.prototype = new Sprite();
+
 FireBall.prototype.step = function(dt) {
     this.x += dt * this.vx;
     this.desplazX += dt * Math.abs(this.vx);
@@ -342,7 +344,6 @@ FireBall.prototype.step = function(dt) {
     if (this.y > 500) {
         this.board.remove(this)
     }
-
 }
 
 FireBall.prototype.draw = function(ctx) {
