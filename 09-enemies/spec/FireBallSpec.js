@@ -21,8 +21,9 @@ describe("09 - FireBall", function() {
         expect(ctx).toBeDefined();
 
         SpriteSheet.map = {
-            explosion: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 };
-        }
+            explosion: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }
+        };
+
         x = 140;
         y = 428;
         fireb = new FireBall(x, y, 1);
