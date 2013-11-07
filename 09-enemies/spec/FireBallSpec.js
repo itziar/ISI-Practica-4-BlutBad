@@ -51,6 +51,10 @@ describe("09 - FireBall", function() {
     });
 
     it("Method step: Comprobar fuera del tablero", function() {
+        spyOn(fireb.board, "remove");
 
+        dt = 1000;
+        fireb.step(dt); 
+        expect(fireb.board.remove).toHaveBeenCalled();
     });
 });
