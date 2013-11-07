@@ -68,6 +68,6 @@ describe("09 - FireBall", function() {
 
         spyOn(SpriteSheet, 'draw');
         fireb.draw(ctx);
-        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, fireb.sprite, fireb.x, fireb.y, 1, 20, 20);
+        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, 'explosion', fireb.x, fireb.y, 1, 20, 20);
     });
 });
