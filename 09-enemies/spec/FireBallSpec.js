@@ -20,12 +20,14 @@ describe("09 - FireBall", function() {
         ctx = canvas.getContext('2d');
         expect(ctx).toBeDefined();
 
-        SpriteSheet.map = sprites;
+        SpriteSheet.map = {
+            explosion: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 };
+        }
         x = 140;
         y = 428;
         fireb = new FireBall(x, y, 1);
         fireb.board = new GameBoard(); 
-        fireb.board.remove = function(obj) {}; 
+        fireb.board.remove = function(obj) {};
     });
  
     it("Add to board", function() {  
@@ -51,6 +53,20 @@ describe("09 - FireBall", function() {
     });
 
     it("Method step: Comprobar fuera del tablero", function() {
+        spyOn(fireb.board, "remove");
 
+        dt = 1000;
+        fireb.step(dt); 
+        expect(fireb.board.remove).toHaveBeenCalled();
+    });
+
+    it("Method draw de fireball", function() {
+        SpriteSheet = { 
+          draw: function(ctx, sprite, x, y) {}
+        };
+
+        spyOn(SpriteSheet, 'draw');
+        fireb.draw(ctx);
+        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, fireb.sprite, fireb.x, fireb.y, 1, 20, 20);
     });
 });

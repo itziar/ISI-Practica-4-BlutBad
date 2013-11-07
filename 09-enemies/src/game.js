@@ -11,7 +11,7 @@ var sprites = {
         sy: 30,
         w: 2,
         h: 10,
-        frames: 1
+        frames: 1 
     },
     enemy_purple: {
         sx: 37,
@@ -310,10 +310,16 @@ var FireBall = function(x, y, factor) {
         this.x += dt * this.vx;
         this.desplazX += dt * Math.abs(this.vx);
         this.x += dt * this.vx; 
+<<<<<<< HEAD
         this.y = this.desplazY + Math.pow(this.desplazX, 2);
         
         if (this.y < -this.h) {
             this.board.remove(this)
+=======
+        this.y = this.desplazY + Math.pow(this.desplazX, 2); 
+        if (this.y > 500) { 
+            this.board.remove(this) 
+>>>>>>> 7b0a36bb95992696971a0689d04b597821bacdbe
         }
 
     }
