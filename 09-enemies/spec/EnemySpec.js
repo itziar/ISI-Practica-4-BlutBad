@@ -111,7 +111,7 @@ describe("09 - Enemies", function() {
 
         spyOn(SpriteSheet, 'draw');
         e.draw(ctx);
-        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, e.sprite, e.x, e.y, 0);
+        expect(SpriteSheet.draw).toHaveBeenCalled();
     });
 
 });
