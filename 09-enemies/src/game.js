@@ -310,10 +310,8 @@ var FireBall = function(x, y, factor) {
         this.x += dt * this.vx;
         this.desplazX += dt * Math.abs(this.vx);
         this.x += dt * this.vx; 
-        this.y = this.desplazY + Math.pow(this.desplazX, 2);
-        console.log(this.y, -this.h-10)
-        if (this.y > 500) {
-            console.log("hola")
+        this.y = this.desplazY + Math.pow(this.desplazX, 2); 
+        if (this.y > 500) { 
             this.board.remove(this) 
         }
 
