@@ -38,6 +38,16 @@ describe("09 - FireBall", function() {
         y = y - fireb.h / 10;
         expect(fireb.x).toBe(x);
         expect(fireb.y).toBe(y); 
+
+        dt = 25;
+        x += dt * fireb.vx; 
+        desplazX = fireb.desplazX + dt * Math.abs(fireb.vx); 
+        x += dt * fireb.vx; 
+        y = fireb.desplazY + Math.pow(desplazX, 2);
+
+        fireb.step(dt);
+        expect(fireb.x).toBe(x);
+        expect(fireb.y).toBe(y);
     });
 
     it("Method step: Comprobar fuera del tablero", function() {
