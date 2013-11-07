@@ -1,3 +1,5 @@
+
+
 var sprites = {
     ship: {
         sx: 0,
@@ -49,7 +51,6 @@ var sprites = {
         frames: 12
     }
 };
-
 
 var enemies = {
     // B, C y E substituirán a los valores por defecto definidos en la
@@ -204,9 +205,9 @@ var PlayerShip = function() {
         }
 
         this.reload -= dt;
-         if(!Game.keys['fire']) up = true;
-        if(up && Game.keys['fire'] && this.reload < 0) {
-            up=false;
+         if(!Game.keys['fire']) this.up = true;
+        if(this.up && Game.keys['fire'] && this.reload < 0) {
+            this.up = false;
             // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
             //Game.keys['fire'] = false;
             this.reload = this.reloadTime;
@@ -238,9 +239,8 @@ var PlayerShip = function() {
 
 // Heredamos del prototipo new Sprite()
 PlayerShip.prototype = new Sprite();
+
 PlayerShip.prototype.type = OBJECT_PLAYER;
-
-
 
 // Constructor para los misiles.
 // Los metodos de esta clase los añadimos a su prototipo. De esta
@@ -256,6 +256,7 @@ var PlayerMissile = function(x, y) {
 };
 
 PlayerMissile.prototype = new Sprite();
+
 PlayerMissile.prototype.type = OBJECT_PLAYER_PROJECTILE;
 
 PlayerMissile.prototype.step = function(dt) {
@@ -268,7 +269,6 @@ PlayerMissile.prototype.step = function(dt) {
         this.board.remove(this);
     }
 };
-
 
 
 // Constructor para las naves enemigas. Un enemigo se define mediante
@@ -307,6 +307,7 @@ var Enemy = function(blueprint, override) {
 }
 
 Enemy.prototype = new Sprite();
+
 Enemy.prototype.type = OBJECT_ENEMY;
 
 // Inicializa los parámetros de las ecuacione de velocidad, y t, que
@@ -373,7 +374,7 @@ Enemy.prototype.hit = function(damage) {
     this.health -= damage;
     if (this.health <= 0) {
         this.board.add(new Explosion(this.x + this.w / 2,
-            this.y + this.h / 2));
+                        this.y + this.h / 2));
         this.board.remove(this);
     }
 }
@@ -396,7 +397,7 @@ Explosion.prototype = new Sprite();
 Explosion.prototype.step = function(dt) {
     this.frame = Math.floor(this.subFrame++/ 3);
     if(this.subFrame >= 36) {
-	this.board.remove(this);
+	   this.board.remove(this);
     }
 }
 
@@ -416,29 +417,30 @@ var FireBall = function(x, y, factor) {
         this.y = y - this.h / 10;
 };
 
-    FireBall.prototype = new Sprite();
+FireBall.prototype = new Sprite();
 
-    FireBall.prototype.type = OBJECT_PLAYER_PROJECTILE;
+FireBall.prototype.type = OBJECT_PLAYER_PROJECTILE;
 
-    FireBall.prototype.step = function(dt) {
-        this.x += dt * this.vx;
-        this.desplazX += dt * Math.abs(this.vx);
-        this.x += dt * this.vx;
-        this.y = this.desplazY + Math.pow(this.desplazX, 2);
+FireBall.prototype.step = function(dt) {
+    this.x += dt * this.vx;
+    this.desplazX += dt * Math.abs(this.vx);
+    this.x += dt * this.vx;
+    this.y = this.desplazY + Math.pow(this.desplazX, 2);
 
 
-        var collision = this.board.collide(this, OBJECT_ENEMY);
-        if (collision) {
-            collision.hit(this.damage);
-        } else if (this.y > 500) {
-            this.board.remove(this);
-        }
+    var collision = this.board.collide(this, OBJECT_ENEMY);
+    if (collision) {
+        collision.hit(this.damage);
+    } else if (this.y > 500) {
+        this.board.remove(this);
     }
-    FireBall.prototype.draw = function(ctx) {
-        SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 40, 40);
-    }
+}
+
+FireBall.prototype.draw = function(ctx) {
+    SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 40, 40);
+}
 
 
-    $(function() {
-        Game.initialize("game", sprites, startGame);
-    });
+$(function() {
+    Game.initialize("game", sprites, startGame);
+});
