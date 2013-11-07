@@ -65,7 +65,7 @@ describe("09 - Enemies", function() {
 
     var canvas, ctx;
 
-    beforeEach(function() {
+    beforeEach(function() { 
         loadFixtures('index.html');
 
         canvas = $('#game')[0];
@@ -75,53 +75,43 @@ describe("09 - Enemies", function() {
         expect(ctx).toBeDefined();
 
         SpriteSheet.map = sprites;
-        var enemies = {
-          basic: {
-            x: 100,
-            y: -50,
-            sprite: 'enemy_bee',
-            B: 100,
-            C: 2,
-            E: 100
-          }
-        };
-          e = new Enemy(enemies.basic);
-          e.board = new GameBoard();
-          e.board.remove = function(obj) {};
-        });
+        e = new Enemy(enemies.basic);
+        e.board = new GameBoard(); 
+        e.board.remove = function(obj) {};
+    }); 
 
-      it("Enemy position", function() {
-        x = 100;
-        y = -50;
-        dt = 2;
+    it("Enemy position", function() {
+       x = 100;
+       y = -50;
+       dt = 2;
 
-        expect(e.x).toBe(x);
-        expect(e.y).toBe(y);
-        e.step(dt);
+       expect(e.x).toBe(x);
+       expect(e.y).toBe(y);
+       e.step(dt); 
+       
+       x += e.vx*dt;
+       y += e.vy*dt;
+       expect(e.x).toBe(x);
+       expect(e.y).toBe(y);
+    });
 
-        x += e.vx * dt;
-        y += e.vy * dt;
-        expect(e.x).toBe(x);
-        expect(e.y).toBe(y);
-      });
-
-      it("Method enemy step", function() {
+    it("Method enemy step", function() {  
 
         spyOn(e.board, 'remove');
         e.step(0.02); // En el tablero
         expect(e.board.remove).not.toHaveBeenCalled();
         e.step(200); // Fuera del tablero
         expect(e.board.remove).toHaveBeenCalled();
-      });
+    });
 
-      it("Method enemy draw", function() {
-        SpriteSheet = {
+    it("Method enemy draw", function() {  
+        SpriteSheet = { 
           draw: function(ctx, sprite, x, y) {}
         };
 
         spyOn(SpriteSheet, 'draw');
         e.draw(ctx);
         expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, e.sprite, e.x, e.y);
-      });
-
     });
+
+});

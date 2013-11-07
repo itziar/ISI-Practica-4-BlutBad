@@ -184,7 +184,7 @@ var PlayerShip = function() {
     this.reload = this.reloadTime;
     this.x = Game.width / 2 - this.w / 2;
     this.y = Game.height - 10 - this.h;
-    this.up = false;
+    var up = false;
 
     this.step = function(dt) {
         if (Game.keys['left']) {
@@ -204,11 +204,11 @@ var PlayerShip = function() {
         }
 
         this.reload -= dt;
-        if (!Game.keys['fire']) this.up = true;
-        if (this.up && Game.keys['fire'] && this.reload < 0) {
+         if(!Game.keys['fire']) up = true;
+        if(up && Game.keys['fire'] && this.reload < 0) {
+            up=false;
             // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
             //Game.keys['fire'] = false;
-            this.up = false;
             this.reload = this.reloadTime;
 
             // Se añaden al gameboard 2 misiles 
@@ -216,21 +216,25 @@ var PlayerShip = function() {
             this.board.add(new PlayerMissile(this.x + this.w, this.y + this.h / 2));
         }
 
-        //console.log("1");if(Game.keys['fireb_rigth'] 
-
         if (Game.keys['fireb_right'] && this.reload < 0) {
-            //Game.keys['fireb_right']= false;
-            this.board.add(new FireBall(this.x, this.y + this.h / 2, -1));
+            Game.keys['fireb_right'] = false;
+
             this.reload = this.reloadTime;
+
+            this.board.add(new FireBall(this.x, this.y, -1));
+
         }
 
         if (Game.keys['fireb_left'] && this.reload < 0) {
-            //Game.keys['fireb_left']= false;
-            this.board.add(new FireBall(this.x + this.w, this.y + this.h / 2, 1));
+            Game.keys['fireb_left'] = false;
+
             this.reload = this.reloadTime;
+
+            this.board.add(new FireBall(this.x, this.y, 1));
+
         }
     }
-};
+}
 
 // Heredamos del prototipo new Sprite()
 PlayerShip.prototype = new Sprite();
@@ -407,7 +411,8 @@ var FireBall = function(x, y, factor) {
         desplazY : 30,
         damage: 50
     });
-        this.x = x - this.w /20; this.y = y - this.h / 10;
+        this.x = x - this.w /20; 
+        this.y = y - this.h / 10;
     };
     /* Tener en cuenta el escalado para h y w */
 
@@ -423,14 +428,13 @@ var FireBall = function(x, y, factor) {
         var collision = this.board.collide(this, OBJECT_ENEMY);
         if (collision) {
             collision.hit(this.damage);
-        } else if (this.y > 500) {
+        } else if (this.y < -this.h) {
             this.board.remove(this);
         }
-    };
-
+    }
     FireBall.prototype.draw = function(ctx) {
         SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 40, 40);
-    };
+    }
 
 
     $(function() {

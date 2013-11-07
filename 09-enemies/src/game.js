@@ -208,7 +208,7 @@ var PlayerShip = function() {
 
     this.reloadTime = 0.25; // Un cuarto de segundo para poder volver a disparar
     this.reload = this.reloadTime;
-    this.up = false;
+    var up = false;
     this.maxVel = 200;
 
     this.step = function(dt) {
@@ -229,7 +229,7 @@ var PlayerShip = function() {
         }
 
         this.reload -= dt;
-        if(!Game.keys['fire']) this.up = true;
+        if(!Game.keys['fire']) up = true;
         if(up && Game.keys['fire'] && this.reload < 0) {
             // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
             //Game.keys['fire'] = false;
@@ -299,7 +299,7 @@ var FireBall = function(x, y, factor) {
     this.startX = x;
     this.startY = 10;
 
-    this.vy = -600;
+    this.vy = -700;
     this.vx = 30 * factor;
 
     this.desplazX = -20;
@@ -309,11 +309,11 @@ var FireBall = function(x, y, factor) {
     this.step = function(dt) { 
         this.x += dt * this.vx;
         this.desplazX += dt * Math.abs(this.vx);
-        this.x += dt * this.vx;  
+        this.x += dt * this.vx; 
         this.y = this.desplazY + Math.pow(this.desplazX, 2); 
         if (this.y > 500) { 
             this.board.remove(this) 
-        } 
+        }
 
     }
 
