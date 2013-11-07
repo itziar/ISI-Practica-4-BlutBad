@@ -104,6 +104,7 @@
 */
 
 describe("11 - Clase Starfield", function() {
+
   beforeEach(function() {
     var sprites = {
       ship: {
@@ -189,40 +190,37 @@ describe("11 - Clase Starfield", function() {
   //    no desapareciendo la bola de fuego
 it("Colision del FireBall y nave enemiga", function() { 
     //Para que haya colision entre estos dos objetoss
-    ball = new FireBall(1, 1, 1);
-    ball.x = enemy.x;
-    ball.y = enemy.y; 
+    ball = new FireBall(); 
 
     board.add(ball); 
     expect(board.objects.length).toBe(2);
 
-    board.step(0.0001);  
-    //expect(_.contains(board.objects, enemy)).toBe(false);
-    expect(board.objects.length).toBe(2);
-    // 2 porque se añade la exposion
+    for (var dt = 0; dt <= 2; dt += 0.1) {
+      board.step(dt); 
+    }
+    expect(_.contains(board.objects, enemy)).toBe(false);  
     expect(_.contains(board.objects, ball)).toBe(true);
     //Ball no se elimina pero la nave si
   });
 
 
-//que una nave enemiga que colisiona con la nave del jugador la
+//     que una nave enemiga que colisiona con la nave del jugador la
 //     destruye, eliminándose tanto la nave enemiga como la nave del
 //     jugador tras aparecer la explosión en la pantalla
 
 it("Colision de PlayerShip y nave enemiga", function() { 
-    ship = new PlayerShip(1,1);
-    ball.x = enemy.x;
-    ball.y = enemy.y; 
+    ship = new PlayerShip();
+    ship.x = enemy.x;
+    ship.y = enemy.y; 
  
     board.add(ship);
     expect(board.objects.length).toBe(2);
 
-    board.step(0.0001);
-    //expect(_.contains(board.objects, ship)).toBe(false);
-    //expect(_.contains(board.objects, ball)).toBe(false);
+    board.step(0.001);
+    expect(_.contains(board.objects, ship)).toBe(false);
+    expect(_.contains(board.objects, ball)).toBe(false);
     //Se han eliminado player y el enemigo
-    board.step(0.00001);
-    //expect(board.objects.length).toBe(1);
+    expect(board.objects.length).toBe(1);
     //Se ha añadido la explosion
   });
 });

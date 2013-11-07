@@ -352,16 +352,16 @@ Enemy.prototype.step = function(dt) {
     this.x += this.vx * dt;
     this.y += this.vy * dt;
 
-    var collision = this.board.collide(this, OBJECT_PLAYER);
-    if (collision) {
+    var collision = this.board.collide(this, OBJECT_PLAYER);     
+    if (collision) { 
         //Se añade la explosion
         this.board.add(new Explosion(this.x + this.w / 2,
             this.y + this.h / 2));
 
         collision.hit(this.damage);
         this.board.remove(this);
-
-    }
+ 
+    } 
 
     if (this.y > Game.height ||
         this.x < -this.w ||
@@ -378,7 +378,6 @@ Enemy.prototype.hit = function(damage) {
         this.board.remove(this);
     }
 }
-
 
 
 // Constructor para la explosión
@@ -428,8 +427,8 @@ FireBall.prototype.step = function(dt) {
     this.y = this.desplazY + Math.pow(this.desplazX, 2);
 
 
-    var collision = this.board.collide(this, OBJECT_ENEMY);
-    if (collision) {
+    var collision = this.board.collide(this, OBJECT_ENEMY);  
+    if (collision) { 
         collision.hit(this.damage);
     } else if (this.y > 500) {
         this.board.remove(this);
