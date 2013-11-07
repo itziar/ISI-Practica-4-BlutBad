@@ -252,6 +252,7 @@ var PlayerShip = function() {
         if (Game.keys['fireb_left'] && this.reload < 0) {
             //Game.keys['fireb_left']= false;
             this.board.add(new FireBall(this.x + this.w, this.y + this.h / 2, 1));
+            console.log(this.x, this.y)
             this.reload = this.reloadTime;
         }
 

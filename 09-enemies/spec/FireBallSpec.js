@@ -7,7 +7,7 @@
 //Comprobar si sigue una trayectoria parabolica
 //Comprobar si se añade al tablero?
 //
-describe("09 - FireBall", function() {
+describe("09 - FireBall", function() { 
 
     var canvas, ctx;
 
@@ -17,25 +17,21 @@ describe("09 - FireBall", function() {
         canvas = $('#game')[0];
         expect(canvas).toExist();
 
-        SpriteSheet.map = sprites;
         ctx = canvas.getContext('2d');
         expect(ctx).toBeDefined();
+
+        SpriteSheet.map = sprites;
+        fireb = new FireBall(140, 428, 1);
+        fireb.board = new GameBoard(); 
+        fireb.board.remove = function(obj) {}; 
     });
  
-    it("add to board", function() {
-        e = new Enemy(enemies.basic);
-        var board = {
-            remove: function(obj) {}
-        };
-        //this.board es indefinido si no hago eso. 
-        e.board = board;
-    });
-    
-    it("parabola/posicion", function() {
-
+    it("Add to board", function() {  
+        fireb.board.add(fireb);
+        expect(_.contains(fireb.board.objects, fireb)).toBe(true);
     });
 
-    it("fuera del tablero", function() {
+    it("Method step: Comprobar fuera del tablero", function() {
 
     });
 });
