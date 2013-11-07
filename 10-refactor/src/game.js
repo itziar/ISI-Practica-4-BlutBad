@@ -156,7 +156,7 @@ var PlayerShip = function() {
     this.reload = this.reloadTime;
     this.x = Game.width / 2 - this.w / 2;
     this.y = Game.height - 10 - this.h;
-    var up = false;
+    this.up = false;
 
     this.step = function(dt) {
         if (Game.keys['left']) {
@@ -176,17 +176,20 @@ var PlayerShip = function() {
         }
 
         this.reload -= dt;
-        if(!Game.keys['fire']) up = true;
-        if(up && Game.keys['fire'] && this.reload < 0) {
-            up=false;
+        if (!Game.keys['fire']) this.up = true;
+        if (up && Game.keys['fire'] && this.reload < 0) {
             // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
             //Game.keys['fire'] = false;
+            this.up = false;
             this.reload = this.reloadTime;
 
             // Se añaden al gameboard 2 misiles 
             this.board.add(new PlayerMissile(this.x, this.y + this.h / 2));
             this.board.add(new PlayerMissile(this.x + this.w, this.y + this.h / 2));
         }
+
+        //console.log("1");if(Game.keys['fireb_rigth'] 
+
         if (Game.keys['fireb_right'] && this.reload < 0) {
             //Game.keys['fireb_right']= false;
             this.board.add(new FireBall(this.x, this.y + this.h / 2, -1));
@@ -196,161 +199,161 @@ var PlayerShip = function() {
         if (Game.keys['fireb_left'] && this.reload < 0) {
             //Game.keys['fireb_left']= false;
             this.board.add(new FireBall(this.x + this.w, this.y + this.h / 2, 1));
+            console.log(this.x, this.y)
             this.reload = this.reloadTime;
         }
     }
-}
 
-// Heredamos del prototipo new Sprite()
-PlayerShip.prototype = new Sprite();
-
+    // Heredamos del prototipo new Sprite()
+    PlayerShip.prototype = new Sprite();
 
 
-// Constructor para los misiles.
-// Los metodos de esta clase los añadimos a su prototipo. De esta
-// forma solo existe una copia de cada uno para todos los misiles, y
-// no una copia para cada objeto misil
-var PlayerMissile = function(x, y) {
-    this.setup('missile', {
-        vy: -700
+
+    // Constructor para los misiles.
+    // Los metodos de esta clase los añadimos a su prototipo. De esta
+    // forma solo existe una copia de cada uno para todos los misiles, y
+    // no una copia para cada objeto misil
+    var PlayerMissile = function(x, y) {
+        this.setup('missile', {
+            vy: -700
+        });
+        this.x = x + this.w / 2;
+        this.y = y + this.h;
+    };
+
+    PlayerMissile.prototype = new Sprite();
+
+    PlayerMissile.prototype.step = function(dt) {
+        this.y += this.vy * dt;
+        if (this.y < -this.h) {
+            this.board.remove(this);
+        }
+    };
+
+
+
+    // Constructor para las naves enemigas. Un enemigo se define mediante
+    // un conjunto de propiedades provenientes de 3 sitios distintos, que
+    // se aplican  este orden:
+    // 1. baseParameters: propiedad del prototipo con los valores por
+    //    omisión para las constantes A..H de las velocidades vx y vy
+    // 2. parámetros definidos en la plantilla blueprint que se pasa como
+    //    parámetro al crear el enemigo. Pueden modificar las propiedades
+    //    definidas en 1.
+    // 3. parámetros definidos en el parámetro override. Pueden modificar
+    // las propiedades definidas en 1 y 2.
+
+    // El código del constructor añade las propiedades en este orden al
+    // objeto que crea.
+
+    // Para definir un nuevo tipo de enemigo: se elige una plantilla
+    // existente o se crea una nueva, y se pasan opcionalmente en override
+    // valores alternativos para los parámetros de la plantilla o de
+    // baseParameters. Ver cómo se añaden 2 enemigos en la función
+    // playGame() de este fichero.
+
+    var Enemy = function(blueprint, override) {
+        // Cada instancia tendrá las propiedades definidas en baseParameters
+        this.merge(this.baseParameters);
+
+        // Se llama a setup para que se añadan como propiedades el sprite
+        // y los atributos definidos en el parámetro blueprint, pudiendo
+        // estas modificar los definidos en baseParameters
+        this.setup(blueprint.sprite, blueprint);
+
+        // Se copian los atributos definidos en el parámetro override,
+        // pudiendo modificar los definidos en baseParameters y en
+        // blueprint
+        this.merge(override);
+    }
+
+    Enemy.prototype = new Sprite();
+
+    // Inicializa los parámetros de las ecuacione de velocidad, y t, que
+    // es la edad de este enemigo
+    Enemy.prototype.baseParameters = {
+        A: 0,
+        B: 0,
+        C: 0,
+        D: 0,
+        E: 0,
+        F: 0,
+        G: 0,
+        H: 0,
+        t: 0
+    };
+
+
+    Enemy.prototype.step = function(dt) {
+        // Actualizamos la edad
+        this.t += dt;
+
+        // El patrón de movimiento lo dictan las ecuaciones que se utilizarán
+        // para calcular las componentes x e y de su velocidad: vx e vy:
+
+        // vx tiene una componente constante A, y otra que va variando
+        // cíclicamente en función de la edad del enemigo (t), según la
+        // sinuisoide definida por las constantes B, C y D.
+        // A: componente constante de la velocidad horizontal
+        // B: fuerza de la velocidad horizontal sinusoidal
+        // C: periodo de la velocidad horizontal sinusoidal
+        // D: desplazamiento en el tiempo de la velocidad horizontal sinusoidal
+        this.vx = this.A + this.B * Math.sin(this.C * this.t + this.D);
+
+        // vy tiene una componente constante E, y otra que va variando
+        // cíclicamente en función de la edad del enemigo (t), según la
+        // sinuisoide definida por las constantes F, G y H.
+        // E: componente constante de la velocidad vertical
+        // F: fuerza de la velocidad vertical sinusoidal
+        // G: periodo de la velocidad vertical sinusoidal
+        // H: desplazamiento en el tiempo de la velocidad vertical sinusoidal
+        this.vy = this.E + this.F * Math.sin(this.G * this.t + this.H);
+
+        this.x += this.vx * dt;
+        this.y += this.vy * dt;
+
+        if (this.y > Game.height ||
+            this.x < -this.w ||
+            this.x > Game.width) {
+            this.board.remove(this);
+        }
+    }
+
+
+    var FireBall = function(x, y, factor) {
+        this.setup('explosion', {
+            vy: -700,
+            startX: x,
+            startY: 10,
+            vx: 30 * factor,
+            desplazX: -20,
+            desplazY: 30
+        });
+
+
+        //Tener en cuenta el escalado para h y w
+        this.x = x - this.w / 20;
+        this.y = y - this.h / 10;
+    };
+
+    FireBall.prototype = new Sprite();
+    FireBall.prototype.step = function(dt) {
+        this.x += dt * this.vx;
+        this.desplazX += dt * Math.abs(this.vx);
+        this.x += dt * this.vx;
+        this.y = this.desplazY + Math.pow(this.desplazX, 2);
+        if (this.y > 500) {
+            this.board.remove(this)
+        }
+
+    }
+
+    FireBall.prototype.draw = function(ctx) {
+        SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 20, 20);
+    }
+
+
+
+    $(function() {
+        Game.initialize("game", sprites, startGame);
     });
-    this.x = x + this.w / 2;
-    this.y = y + this.h;
-};
-
-PlayerMissile.prototype = new Sprite();
-
-PlayerMissile.prototype.step = function(dt) {
-    this.y += this.vy * dt;
-    if (this.y < -this.h) {
-        this.board.remove(this);
-    }
-};
-
-
-
-// Constructor para las naves enemigas. Un enemigo se define mediante
-// un conjunto de propiedades provenientes de 3 sitios distintos, que
-// se aplican  este orden:
-// 1. baseParameters: propiedad del prototipo con los valores por
-//    omisión para las constantes A..H de las velocidades vx y vy
-// 2. parámetros definidos en la plantilla blueprint que se pasa como
-//    parámetro al crear el enemigo. Pueden modificar las propiedades
-//    definidas en 1.
-// 3. parámetros definidos en el parámetro override. Pueden modificar
-// las propiedades definidas en 1 y 2.
-
-// El código del constructor añade las propiedades en este orden al
-// objeto que crea.
-
-// Para definir un nuevo tipo de enemigo: se elige una plantilla
-// existente o se crea una nueva, y se pasan opcionalmente en override
-// valores alternativos para los parámetros de la plantilla o de
-// baseParameters. Ver cómo se añaden 2 enemigos en la función
-// playGame() de este fichero.
-
-var Enemy = function(blueprint, override) {
-    // Cada instancia tendrá las propiedades definidas en baseParameters
-    this.merge(this.baseParameters);
-
-    // Se llama a setup para que se añadan como propiedades el sprite
-    // y los atributos definidos en el parámetro blueprint, pudiendo
-    // estas modificar los definidos en baseParameters
-    this.setup(blueprint.sprite, blueprint);
-
-    // Se copian los atributos definidos en el parámetro override,
-    // pudiendo modificar los definidos en baseParameters y en
-    // blueprint
-    this.merge(override);
-}
-
-Enemy.prototype = new Sprite();
-
-// Inicializa los parámetros de las ecuacione de velocidad, y t, que
-// es la edad de este enemigo
-Enemy.prototype.baseParameters = {
-    A: 0,
-    B: 0,
-    C: 0,
-    D: 0,
-    E: 0,
-    F: 0,
-    G: 0,
-    H: 0,
-    t: 0
-};
-
-
-Enemy.prototype.step = function(dt) {
-    // Actualizamos la edad
-    this.t += dt;
-
-    // El patrón de movimiento lo dictan las ecuaciones que se utilizarán
-    // para calcular las componentes x e y de su velocidad: vx e vy:
-
-    // vx tiene una componente constante A, y otra que va variando
-    // cíclicamente en función de la edad del enemigo (t), según la
-    // sinuisoide definida por las constantes B, C y D.
-    // A: componente constante de la velocidad horizontal
-    // B: fuerza de la velocidad horizontal sinusoidal
-    // C: periodo de la velocidad horizontal sinusoidal
-    // D: desplazamiento en el tiempo de la velocidad horizontal sinusoidal
-    this.vx = this.A + this.B * Math.sin(this.C * this.t + this.D);
-
-    // vy tiene una componente constante E, y otra que va variando
-    // cíclicamente en función de la edad del enemigo (t), según la
-    // sinuisoide definida por las constantes F, G y H.
-    // E: componente constante de la velocidad vertical
-    // F: fuerza de la velocidad vertical sinusoidal
-    // G: periodo de la velocidad vertical sinusoidal
-    // H: desplazamiento en el tiempo de la velocidad vertical sinusoidal
-    this.vy = this.E + this.F * Math.sin(this.G * this.t + this.H);
-
-    this.x += this.vx * dt;
-    this.y += this.vy * dt;
-
-    if (this.y > Game.height ||
-        this.x < -this.w ||
-        this.x > Game.width) {
-        this.board.remove(this);
-    }
-}
-
-
-var FireBall = function(x, y, factor) {
-    this.setup('explosion', {
-        vy: -700,
-        startX : x,
-        startY : 10,
-        vx : 30 * factor,
-        desplazX :-20,
-        desplazY : 30
-    });
-
-
-    //Tener en cuenta el escalado para h y w
-    this.x = x - this.w / 20;
-    this.y = y - this.h / 10;
-};
-
-FireBall.prototype = new Sprite();
-FireBall.prototype.step = function(dt) {
-    this.x += dt * this.vx;
-    this.desplazX += dt * Math.abs(this.vx);
-    this.x += dt * this.vx;
-    this.y = this.desplazY + Math.pow(this.desplazX, 2);
-    if (this.y < -this.h) {
-        this.board.remove(this)
-    }
-
-}
-
-FireBall.prototype.draw = function(ctx) {
-    SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 20, 20);
-}
-
-
-
-$(function() {
-    Game.initialize("game", sprites, startGame);
-});
