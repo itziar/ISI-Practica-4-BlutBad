@@ -309,11 +309,11 @@ var FireBall = function(x, y, factor) {
     this.step = function(dt) { 
         this.x += dt * this.vx;
         this.desplazX += dt * Math.abs(this.vx);
-        this.x += dt * this.vx; 
-
+        this.x += dt * this.vx;  
         this.y = this.desplazY + Math.pow(this.desplazX, 2); 
         if (this.y > 500) { 
-            this.board.remove(this)         }
+            this.board.remove(this) 
+        } 
 
     }
 

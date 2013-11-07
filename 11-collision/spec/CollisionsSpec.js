@@ -146,6 +146,7 @@ describe("11 - Clase Starfield", function() {
             C: 2,
             E: 100
           }
+        };
           SpriteSheet.map = sprites;
         });
 

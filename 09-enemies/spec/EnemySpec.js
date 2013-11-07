@@ -84,6 +84,7 @@ describe("09 - Enemies", function() {
             C: 2,
             E: 100
           }
+        };
           e = new Enemy(enemies.basic);
           e.board = new GameBoard();
           e.board.remove = function(obj) {};
