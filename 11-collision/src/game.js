@@ -411,13 +411,15 @@ var FireBall = function(x, y, factor) {
         desplazY : 30,
         damage: 50
     });
+        /* Tener en cuenta el escalado para h y w */
         this.x = x - this.w /20; 
         this.y = y - this.h / 10;
-    };
-    /* Tener en cuenta el escalado para h y w */
+};
 
     FireBall.prototype = new Sprite();
+
     FireBall.prototype.type = OBJECT_PLAYER_PROJECTILE;
+
     FireBall.prototype.step = function(dt) {
         this.x += dt * this.vx;
         this.desplazX += dt * Math.abs(this.vx);
@@ -428,7 +430,7 @@ var FireBall = function(x, y, factor) {
         var collision = this.board.collide(this, OBJECT_ENEMY);
         if (collision) {
             collision.hit(this.damage);
-        } else if (this.y < -this.h) {
+        } else if (this.y > 500) {
             this.board.remove(this);
         }
     }

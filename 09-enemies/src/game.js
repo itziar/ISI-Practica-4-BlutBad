@@ -319,7 +319,7 @@ var FireBall = function(x, y, factor) {
     }
 
     this.draw = function(ctx) {
-        SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 20, 20);
+        SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 40, 40);
     }
 };
 

@@ -61,12 +61,8 @@ describe("09 - FireBall", function() {
     });
 
     it("Method draw de fireball", function() {
-        SpriteSheet = { 
-          draw: function(ctx, sprite, x, y) {}
-        };
-
         spyOn(SpriteSheet, 'draw');
         fireb.draw(ctx);
-        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, 'explosion', fireb.x, fireb.y, 1, 20, 20);
+        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, 'explosion', fireb.x, fireb.y, 1, 40, 40);
     });
 });

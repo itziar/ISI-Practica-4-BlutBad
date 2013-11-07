@@ -347,7 +347,7 @@ FireBall.prototype.step = function(dt) {
 }
 
 FireBall.prototype.draw = function(ctx) {
-    SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 20, 20);
+    SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 40, 40);
 }
 
 
