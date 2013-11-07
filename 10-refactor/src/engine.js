@@ -25,7 +25,7 @@ var Game = new function() {
                 return alert("Please upgrade your browser to play");
             }
 
-            this.setupInput();
+            this.setupInput(); 
 
             this.loop();
 
@@ -278,7 +278,6 @@ var GameBoard = function() {
 
 
 };
-
 
 
 // Constructor Sprite 
