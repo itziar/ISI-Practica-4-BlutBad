@@ -8,7 +8,7 @@ var sprites = {
     },
     missile: {
         sx: 0,
-        sy: 30,
+        sy: 30, 
         w: 2,
         h: 10,
         frames: 1
