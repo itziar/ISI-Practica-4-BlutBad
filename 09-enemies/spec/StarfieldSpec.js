@@ -3,7 +3,7 @@
 // Usamos matchers de jasmine-jquery: https://github.com/velesin/jasmine-jquery
 //
 
-describe("Clase Starfield", function(){
+describe("Default - Clase Starfield", function(){
 // You can create a scrolling starfield in a few ways, but in this
 // case you need to be a little careful with the number of objects
 // that get drawn on the screen because drawing too many sprites per

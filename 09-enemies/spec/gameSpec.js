@@ -8,7 +8,7 @@
 // Debe Proporcionar un mecanismo para cambiar lo que se muestra en la pantalla.
 
 
-describe("Game singleton", function(){
+describe("Default - Game singleton", function(){
 
     var canvas, ctx;
 

@@ -1,4 +1,4 @@
-describe ("Fichero index.html para el juego", function(){
+describe ("Default - Fichero index.html para el juego", function(){
     beforeEach(function(){
 	loadFixtures('index.html');
     });
@@ -20,7 +20,7 @@ describe ("Fichero index.html para el juego", function(){
 });
 
 
-describe("Codigo que manipula el canvas en game.js", function(){
+describe("Default - Codigo que manipula el canvas en game.js", function(){
 
     var canvas, ctx;
 
@@ -36,7 +36,7 @@ describe("Codigo que manipula el canvas en game.js", function(){
 
 });
 
-describe("Objeto singleton SpriteSheet", function(){
+describe("Default - Objeto singleton SpriteSheet", function(){
     //
     // El objeto singleton SpriteSheet de engine.js gestionara la hoja
     // de sprites (spritesheet).

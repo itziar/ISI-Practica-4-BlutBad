@@ -1,4 +1,4 @@
-describe("Clase TitleScreen", function(){
+describe("Default - Clase TitleScreen", function(){
     // Se deberá mostrar una pantalla de inicio o title screen que muestre
     // el nombre del juego e indicaciones para como comenzar a jugar
 
