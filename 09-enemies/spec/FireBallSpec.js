@@ -21,7 +21,9 @@ describe("09 - FireBall", function() {
         expect(ctx).toBeDefined();
 
         SpriteSheet.map = sprites;
-        fireb = new FireBall(140, 428, 1);
+        x = 140;
+        y = 428;
+        fireb = new FireBall(x, y, 1);
         fireb.board = new GameBoard(); 
         fireb.board.remove = function(obj) {}; 
     });
@@ -29,6 +31,13 @@ describe("09 - FireBall", function() {
     it("Add to board", function() {  
         fireb.board.add(fireb);
         expect(_.contains(fireb.board.objects, fireb)).toBe(true);
+    }); 
+
+    it("Method step: Comprobar posición", function() { 
+        x = x - fireb.w / 20;
+        y = y - fireb.h / 10;
+        expect(fireb.x).toBe(x);
+        expect(fireb.y).toBe(y); 
     });
 
     it("Method step: Comprobar fuera del tablero", function() {
