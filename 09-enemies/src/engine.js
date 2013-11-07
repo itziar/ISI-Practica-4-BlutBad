@@ -8,7 +8,7 @@
 // (jugador, enemigo, proyectiles, y los elementos como el marcador de
 // puntuación o el número de vidas.
 
-
+ 
 
 
 // Objeto singleton Game: se guarda una unica instancia del

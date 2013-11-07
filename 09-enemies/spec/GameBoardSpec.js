@@ -13,7 +13,7 @@
   misil disparado por la nave del usuario ha colisionado con una nave
   enemiga.
 
-
+ 
   Requisitos:
 
   Este es precisamente el requisito que se ha identificado para este
@@ -88,7 +88,7 @@ describe("09 - Clase GameBoard", function() {
 
 
     it("add", function() {
-        playerShip = new PlayerShip();
+        playerShip = 8;
         board.add(playerShip);
 
         expect(board.objects.length).toEqual(1);

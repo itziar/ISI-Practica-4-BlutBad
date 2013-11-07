@@ -5,7 +5,7 @@
   El objetivo de este prototipo es ańadir al juego naves enemigas. Las
   naves se ańadirán al tablero de juegos (objeto GameBoard) al igual
   que el resto de los elementos del juego (nave del jugador y
-  misiles).
+  misiles). 
 
   Cada nave enemiga debe tener un patrón de movimiento que exhibirá
   desde que entra por la parte superior del canvas hasta que
@@ -111,7 +111,7 @@ describe("09 - Enemies", function() {
 
         spyOn(SpriteSheet, 'draw');
         e.draw(ctx);
-        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, e.sprite, e.x, e.y);
+        expect(SpriteSheet.draw).toHaveBeenCalledWith(ctx, e.sprite, e.x, e.y, 0);
     });
 
 });
