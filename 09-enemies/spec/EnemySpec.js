@@ -75,15 +75,21 @@ describe("09 - Enemies", function() {
         expect(ctx).toBeDefined();
 
         SpriteSheet.map = sprites;
-        e = new Enemy(enemies.basic);
+        e = new Enemy({ 
+          x: 0,   
+          y: -50, 
+          sprite: 'enemy_ship', 
+          health: 10, 
+          E: 100 
+        });
         e.board = new GameBoard(); 
         e.board.remove = function(obj) {};
     }); 
 
-    it("Enemy position", function() {
-       x = 100;
-       y = -50;
+    it("Enemy position", function() { 
        dt = 2;
+       x = 0;
+       y = -50;
 
        expect(e.x).toBe(x);
        expect(e.y).toBe(y);
@@ -91,7 +97,7 @@ describe("09 - Enemies", function() {
        
        x += e.vx*dt;
        y += e.vy*dt;
-       expect(e.x).toBe(x);
+       expect(e.x).toBe(x); 
        expect(e.y).toBe(y);
     });
 

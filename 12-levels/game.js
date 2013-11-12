@@ -367,7 +367,6 @@ Explosion.prototype.step = function(dt) {
 }
 
 
-
 $(function() {
     Game.initialize("game",sprites,startGame);
 });
