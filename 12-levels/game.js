@@ -366,6 +366,44 @@ Explosion.prototype.step = function(dt) {
     }
 }
 
+var FireBall = function(x, y, factor) {
+    this.setup('explosion', {
+        vy: -700,
+        startX : x,
+        startY : 10,
+        vx : 30 * factor,
+        desplazX :-20,
+        desplazY : 30,
+        damage: 50
+    });
+        /* Tener en cuenta el escalado para h y w */
+        this.x = x - this.w /20; 
+        this.y = y - this.h / 10;
+};
+
+FireBall.prototype = new Sprite();
+
+FireBall.prototype.type = OBJECT_PLAYER_PROJECTILE;
+
+FireBall.prototype.step = function(dt) {
+    this.x += dt * this.vx;
+    this.desplazX += dt * Math.abs(this.vx);
+    this.x += dt * this.vx;
+    this.y = this.desplazY + Math.pow(this.desplazX, 2);
+
+
+    var collision = this.board.collide(this, OBJECT_ENEMY);  
+    if (collision) { 
+        collision.hit(this.damage);
+    } else if (this.y > 500) {
+        this.board.remove(this);
+    }
+}
+
+FireBall.prototype.draw = function(ctx) {
+    SpriteSheet.draw(ctx, 'explosion', this.x, this.y, 1, 40, 40);
+}
+
 
 $(function() {
     Game.initialize("game",sprites,startGame);
