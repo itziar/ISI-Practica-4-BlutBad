@@ -215,6 +215,7 @@ describe("11 - Colisiones", function() {
 //     jugador tras aparecer la explosión en la pantalla
 
   it("Colisión de PlayerShip y nave enemiga", function() {  
+    loseGame = function {};
     ship = new PlayerShip();
     ship.x = enemy.x;
     ship.y = enemy.y; 
