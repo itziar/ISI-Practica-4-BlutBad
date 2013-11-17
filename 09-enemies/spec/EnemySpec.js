@@ -74,7 +74,7 @@ describe("09 - Enemies", function() {
         ctx = canvas.getContext('2d');
         expect(ctx).toBeDefined();
 
-        SpriteSheet.map = sprites;
+        SpriteSheet.map = enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 };
         e = new Enemy({ 
           x: 0,   
           y: -50, 
