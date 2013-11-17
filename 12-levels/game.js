@@ -131,8 +131,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
     // Si la opción clear está activada, el fondo del canvas se pinta
     // de negro. Utilizado en el nivel mas profundo de estrellas
     if(clear) {
-	starCtx.fillStyle = "#000";
-	starCtx.fillRect(0,0,stars.width,stars.height);
+    	starCtx.fillStyle = "#000";
+    	starCtx.fillRect(0,0,stars.width,stars.height);
     }
 
     // Dibujamos las estrellas blancas sobre el canvas no visible,
@@ -140,10 +140,10 @@ var Starfield = function(speed,opacity,numStars,clear) {
     starCtx.fillStyle = "#FFF";
     starCtx.globalAlpha = opacity; // nivel de transparencia de las estrellas
     for(var i=0;i<numStars;i++) {
-	starCtx.fillRect(Math.floor(Math.random()*stars.width),
-			 Math.floor(Math.random()*stars.height),
-			 2,
-			 2);
+    	starCtx.fillRect(Math.floor(Math.random()*stars.width),
+    			 Math.floor(Math.random()*stars.height),
+    			 2,
+    			 2);
     }
 
     // Se llama a este método en cada frame de la animación para dibujar
@@ -171,13 +171,13 @@ var Starfield = function(speed,opacity,numStars,clear) {
 			  0, intOffset,
 			  stars.width, remaining);
 	}
-    }
+}
 
     // En cada paso de la animación, movemos el campo de estrellas
     // modificando el offset según la cantidad de tiempo transcurrida
     this.step = function(dt) {
-	offset += dt * speed; // velocidad = espacio / tiempo
-	offset = offset % stars.height;
+    	offset += dt * speed; // velocidad = espacio / tiempo
+    	offset = offset % stars.height;
     }
 }
 
@@ -192,27 +192,27 @@ var PlayerShip = function() {
     this.y = Game.height - 10 - this.h;
 
     this.step = function(dt) {
-	if(Game.keys['left']) { this.vx = -this.maxVel; }
-	else if(Game.keys['right']) { this.vx = this.maxVel; }
-	else { this.vx = 0; }
+    	if(Game.keys['left']) { this.vx = -this.maxVel; }
+    	else if(Game.keys['right']) { this.vx = this.maxVel; }
+    	else { this.vx = 0; }
 
-	this.x += this.vx * dt;
+    	this.x += this.vx * dt;
 
-	if(this.x < 0) { this.x = 0; }
-	else if(this.x > Game.width - this.w) { 
-	    this.x = Game.width - this.w;
-	}
+    	if(this.x < 0) { this.x = 0; }
+    	else if(this.x > Game.width - this.w) { 
+    	    this.x = Game.width - this.w;
+    	}
 
-	this.reload-=dt;
-	if(Game.keys['fire'] && this.reload < 0) {
-	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	    Game.keys['fire'] = false;
-	    this.reload = this.reloadTime;
+    	this.reload-=dt;
+    	if(Game.keys['fire'] && this.reload < 0) {
+    	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
+    	    Game.keys['fire'] = false;
+    	    this.reload = this.reloadTime;
 
-	    // Se añaden al gameboard 2 misiles 
-	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
-	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
-	}
+    	    // Se añaden al gameboard 2 misiles 
+    	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
+    	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
+    	}
     };
 };
 
@@ -223,7 +223,7 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
     if(this.board.remove(this)) {
-	loseGame();
+	   loseGame();
     }
 };
 
@@ -245,10 +245,10 @@ PlayerMissile.prototype.step = function(dt)  {
     this.y += this.vy * dt;
     var collision = this.board.collide(this,OBJECT_ENEMY);
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
+    	collision.hit(this.damage);
+    	this.board.remove(this);
     } else if(this.y < -this.h) { 
-	this.board.remove(this); 
+	   this.board.remove(this); 
     }
 };
 
@@ -327,23 +327,23 @@ Enemy.prototype.step = function(dt) {
 
     var collision = this.board.collide(this,OBJECT_PLAYER);
     if(collision) {
-	collision.hit(this.damage);
-	this.board.remove(this);
+    	collision.hit(this.damage);
+    	this.board.remove(this);
     }
 
     if(this.y > Game.height ||
        this.x < -this.w ||
        this.x > Game.width) {
-	this.board.remove(this);
+	       this.board.remove(this);
     }
 };
 
 Enemy.prototype.hit = function(damage) {
     this.health -= damage;
     if(this.health <= 0) {
-	this.board.add(new Explosion(this.x + this.w/2, 
-                                     this.y + this.h/2));
-	this.board.remove(this);
+    	this.board.add(new Explosion(this.x + this.w/2, 
+                                         this.y + this.h/2));
+    	this.board.remove(this);
     }
 }
 
@@ -362,7 +362,7 @@ Explosion.prototype = new Sprite();
 Explosion.prototype.step = function(dt) {
     this.frame = Math.floor(this.subFrame++ / 2);
     if(this.subFrame >= 24) {
-	this.board.remove(this);
+	   this.board.remove(this);
     }
 }
 
@@ -376,9 +376,9 @@ var FireBall = function(x, y, factor) {
         desplazY : 30,
         damage: 50
     });
-        /* Tener en cuenta el escalado para h y w */
-        this.x = x - this.w /20; 
-        this.y = y - this.h / 10;
+    /* Tener en cuenta el escalado para h y w */
+    this.x = x - this.w /20; 
+    this.y = y - this.h / 10;
 };
 
 FireBall.prototype = new Sprite();
