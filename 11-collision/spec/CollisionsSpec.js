@@ -103,9 +103,9 @@
    sí deben ser substituidos por dobles.
 */
 
-describe("11 - Clase Starfield", function() {
+describe("11 - Colisiones", function() {
 
-  beforeEach(function() {
+  beforeEach(function() { 
     var sprites = {
       ship: {
         sx: 0,
@@ -139,14 +139,20 @@ describe("11 - Clase Starfield", function() {
 
     SpriteSheet.map = sprites;
     board = new GameBoard();
-    enemy = new Enemy(enemies.basic); 
-    board.add(enemy);
+    enemy = new Enemy({ 
+          x: 0,   
+          y: -50, 
+          sprite: 'explosion', 
+          health: 10, 
+          E: 100 
+    }); 
   });
 
   // que un misil con el daño suficiente que colisiona con una nave
   //  enemiga la destruye, eliminándose la nave y el misil del tablero
   //  de juegos
   it("Colision del misil y nave enemiga, damage > health", function() {
+    board.add(enemy);
     //Para que haya colision entre estos dos objetos
     misil = new PlayerMissile(1,1); 
     misil.x = enemy.x;
