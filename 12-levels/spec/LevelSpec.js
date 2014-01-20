@@ -82,6 +82,5 @@ describe("12 - Levels", function() {
 	});
 
 	it ("step", function(){
-		//arreglar los del 11 porque no pasan ahora estan comentados 
 	});
 });
