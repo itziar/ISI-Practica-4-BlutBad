@@ -7,7 +7,7 @@
   que el resto de los elementos del juego (nave del jugador y
   misiles). 
 
-  Cada nave enemiga debe tener un patrón de movimiento que exhibirá
+  Cada nave enemiga debe tener un patrón de movimiento que exhibirá 
   desde que entra por la parte superior del canvas hasta que
   desaparece por la parte inferior. En este prototipo las naves
   enemigos no interaccionan con el resto de los elementos del juego:
@@ -74,7 +74,7 @@ describe("09 - Enemies", function() {
         ctx = canvas.getContext('2d');
         expect(ctx).toBeDefined();
 
-        SpriteSheet.map = sprites;
+        SpriteSheet.map = enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 };
         e = new Enemy({ 
           x: 0,   
           y: -50, 
@@ -102,7 +102,6 @@ describe("09 - Enemies", function() {
     });
 
     it("Method enemy step", function() {  
-
         spyOn(e.board, 'remove');
         e.step(0.02); // En el tablero
         expect(e.board.remove).not.toHaveBeenCalled();

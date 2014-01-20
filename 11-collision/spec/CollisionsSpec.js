@@ -103,9 +103,9 @@
    sí deben ser substituidos por dobles.
 */
 
-describe("11 - Clase Starfield", function() {
+describe("11 - Colisiones", function() {
 
-  beforeEach(function() {
+  beforeEach(function() { 
     var sprites = {
       ship: {
         sx: 0,
@@ -139,14 +139,20 @@ describe("11 - Clase Starfield", function() {
 
     SpriteSheet.map = sprites;
     board = new GameBoard();
-    enemy = new Enemy(enemies.basic); 
+    enemy = new Enemy({ 
+          x: 0,   
+          y: -50, 
+          sprite: 'explosion', 
+          health: 10, 
+          E: 100 
+    }); 
     board.add(enemy);
   });
 
   // que un misil con el daño suficiente que colisiona con una nave
   //  enemiga la destruye, eliminándose la nave y el misil del tablero
   //  de juegos
-  it("Colision del misil y nave enemiga, damage > health", function() {
+  it("Colisión del misil y nave enemiga, damage > health", function() {
     //Para que haya colision entre estos dos objetos
     misil = new PlayerMissile(1,1); 
     misil.x = enemy.x;
@@ -167,7 +173,7 @@ describe("11 - Clase Starfield", function() {
   //    enemiga no la destruye, reduce la salud de la nave enemiga, y
   //    desaparece del tablero de juegos sin que desaparezca la nave
   //    enemiga
-  it("Colision del misil y nave enemiga, damage < health", function() { 
+  it("Colisión del misil y nave enemiga, damage < health", function() { 
     //Para que haya colision entre estos dos objetoss
     misil = new PlayerMissile(1, 1);
     misil.x = enemy.x;
@@ -188,19 +194,19 @@ describe("11 - Clase Starfield", function() {
   //    que una bola de fuego que colisiona con una nave la destruye
   //    siempre, desapareciendo del tablero de juegos la nave enemiga, y
   //    no desapareciendo la bola de fuego
-it("Colision del FireBall y nave enemiga", function() { 
-    //Para que haya colision entre estos dos objetoss
-    ball = new FireBall(); 
+  it("Colisión del FireBall y nave enemiga", function() { 
+      //Para que haya colision entre estos dos objetoss
+      ball = new FireBall(); 
 
-    board.add(ball); 
-    expect(board.objects.length).toBe(2);
+      board.add(ball); 
+      expect(board.objects.length).toBe(2);
 
-    for (var dt = 0; dt <= 2; dt += 0.1) {
-      board.step(dt); 
-    }
-    expect(_.contains(board.objects, enemy)).toBe(false);  
-    expect(_.contains(board.objects, ball)).toBe(true);
-    //Ball no se elimina pero la nave si
+      for (var dt = 0; dt <= 2; dt += 0.1) {
+        board.step(dt); 
+      }
+      expect(_.contains(board.objects, enemy)).toBe(false);  
+      expect(_.contains(board.objects, ball)).toBe(true);
+      //Ball no se elimina pero la nave si
   });
 
 
@@ -208,17 +214,18 @@ it("Colision del FireBall y nave enemiga", function() {
 //     destruye, eliminándose tanto la nave enemiga como la nave del
 //     jugador tras aparecer la explosión en la pantalla
 
-it("Colision de PlayerShip y nave enemiga", function() { 
+  it("Colisión de PlayerShip y nave enemiga", function() {  
+    loseGame = function {};
     ship = new PlayerShip();
     ship.x = enemy.x;
     ship.y = enemy.y; 
  
     board.add(ship);
     expect(board.objects.length).toBe(2);
-
-    board.step(0.001);
+  
+    board.step(0.0001);
     expect(_.contains(board.objects, ship)).toBe(false);
-    expect(_.contains(board.objects, ball)).toBe(false);
+    expect(_.contains(board.objects, enemy)).toBe(false);
     //Se han eliminado player y el enemigo
     expect(board.objects.length).toBe(1);
     //Se ha añadido la explosion

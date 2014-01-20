@@ -7,7 +7,7 @@
 //Comprobar si sigue una trayectoria parabolica
 //Comprobar si se añade al tablero?
 //
-describe("09 - FireBall", function() { 
+describe("09 - FireBall", function() {  
 
     var canvas, ctx;
 
