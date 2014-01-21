@@ -342,6 +342,7 @@ var Level = function(levelData,callback) {
 // se van añadiendo nuevos enemigos al tablero de juegos según lo
 // indicado en la definición del nivel almacenada en this.levelData
 Level.prototype.step = function(dt) {
+
     var idx = 0, remove = [], curShip = null;
 
     // Actualizamos el tiempo que ha pasado 
@@ -361,8 +362,10 @@ Level.prototype.step = function(dt) {
     	// Es el mismo patrón que utilizamos cuando borramos sprites
     	// del tablero de juegos: marcamos en remove para borrar y
     	// borramos una vez concluído el bucle.
+
     	if(this.t > curShip[1]) {
     	    remove.push(curShip);
+
     	} else if(curShip[0] < this.t) {
     	    // Ha llegado la hora de crear un nuevo enemigo de esta batería
     	    var enemy = enemies[curShip[3]],
@@ -379,6 +382,7 @@ Level.prototype.step = function(dt) {
     	    // Frecuencia ms
     	    curShip[0] += curShip[2];
     	}
+        
     	idx++; // Pasamos a la siguiente batería de enemigos
     }
 
